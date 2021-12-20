@@ -3,6 +3,19 @@ module Week2.LogAnalysis where
 import Data.String
 import Week2.Log
 
+whatWentWrong :: [LogMessage] -> [String]
+whatWentWrong = map extractMsg . inOrder . build . filter (isSevere 50) . filter isError
+  where
+    extractMsg :: LogMessage -> String
+    extractMsg (LogMessage _ _ msg) = msg
+
+    isSevere :: Int -> LogMessage -> Bool
+    isSevere n1 (LogMessage (Error n2) _ _) = n2 >= n1
+
+    isError :: LogMessage -> Bool
+    isError (LogMessage (Error _) _ _) = True
+    isError _ = False
+
 inOrder :: MessageTree -> [LogMessage]
 inOrder Leaf = []
 inOrder (Node lTree msg rTree) = (inOrder lTree) ++ [msg] ++ (inOrder rTree)

@@ -3,7 +3,7 @@
   <a href="https://github.com/miracoly/cis194-homework/actions/workflows/haskell.yml"><img alt="Cabal" src="https://img.shields.io/github/workflow/status/miracoly/cis194-homework/Haskell-CI?label=Cabal&logo=githubactions&logoColor=white"></a>
 </p>
 
-# CIS194 Haskell Homework Solutions
+# CIS194 Homework Solutions with Tests
 
 This project contains my solutions for the CIS194 Haskell Homework, which is a
 great way to start learning haskell.

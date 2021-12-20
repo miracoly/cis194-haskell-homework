@@ -66,3 +66,12 @@ main = hspec $ do
       let sortedList = [message1, message4, message2, message5, message3]
       inOrder tree4 `shouldBe` sortedList
       inOrder tree5 `shouldBe` sortedList
+
+  describe "Test whatWentWrong" $ do
+    it "should return sorted error messages" $ do
+      testWhatWentWrong parse whatWentWrong "app/Week2/sample.log" `shouldReturn`
+        [
+          "Way too many pickles",
+          "Bad pickle-flange interaction detected",
+          "Flange failed!"
+        ]
