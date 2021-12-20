@@ -3,4 +3,4 @@
 week1:
 	cabal test week1 --test-show-details=direct --test-option=--format=progress
 week2:
-	cabal test week2 --test-show-details=direct --test-option=--format=progress
+	cabal test week2 --test-show-details=always --test-option=--format=progress
