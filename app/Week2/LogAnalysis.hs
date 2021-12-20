@@ -3,6 +3,9 @@ module Week2.LogAnalysis where
 import Data.String
 import Week2.Log
 
+build :: [LogMessage] -> MessageTree
+build logs = foldr insert Leaf (reverse logs)
+
 insert :: LogMessage -> MessageTree -> MessageTree
 insert msg Leaf = Node Leaf msg Leaf
 insert msg@(LogMessage _ newTime _) (Node left tmsg@(LogMessage _ time _) right)
