@@ -10,3 +10,7 @@ great way to start learning haskell.
 
 **Link:** [CIS194 Course](https://www.cis.upenn.edu/~cis194/spring13/) -
 [CIS194 Homework](https://www.cis.upenn.edu/~cis194/spring13/lectures.html)
+
+I've added unit tests for each function with [Hspec](http://hspec.github.io/)
+and [QuickCheck](https://hackage.haskell.org/package/QuickCheck). Use the
+Makefile to run them.
