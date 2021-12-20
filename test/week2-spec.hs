@@ -23,6 +23,11 @@ main = hspec $ do
   let tree1 = Node leafTree1 message2 leafTree3
   let tree2 = Node (Node Leaf message1 leafTree4) message2 leafTree3
   let tree3 = Node leafTree1 message2 (Node leafTree5 message3 Leaf)
+  let tree4 = Node Leaf message1 (Node leafTree4 message2 (Node leafTree5 message3 Leaf))
+  let tree5 = Node (Node leafTree1 message4 (Node Leaf message2 leafTree5)) message3 Leaf
+
+  let logs1 = [message1, message2, message3, message4, message5]          
+  let logs2 = [message3, message4, message2, message5, message1]          
  
   describe "Test parseMessage" $ do
     it "should return correct message" $ do
@@ -53,10 +58,11 @@ main = hspec $ do
     it "should return Leaf is log list is empty" $ do
       build [] `shouldBe` Leaf
     it "should build Tree correctly" $ do
-      let logs1 = [message1, message2, message3, message4, message5]          
-      let result1 = Node Leaf message1 (Node leafTree4 message2 (Node leafTree5 message3 Leaf))
-      build logs1 `shouldBe` result1
-      
-      let logs2 = [message3, message4, message2, message5, message1]          
-      let result2 = Node (Node leafTree1 message4 (Node Leaf message2 leafTree5)) message3 Leaf
-      build logs2 `shouldBe` result2
+      build logs1 `shouldBe` tree4
+      build logs2 `shouldBe` tree5
+
+  describe "Test inOrder" $ do
+    it "should return list of logs sorted by timestamp" $ do
+      let sortedList = [message1, message4, message2, message5, message3]
+      inOrder tree4 `shouldBe` sortedList
+      inOrder tree5 `shouldBe` sortedList

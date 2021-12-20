@@ -3,6 +3,10 @@ module Week2.LogAnalysis where
 import Data.String
 import Week2.Log
 
+inOrder :: MessageTree -> [LogMessage]
+inOrder Leaf = []
+inOrder (Node lTree msg rTree) = (inOrder lTree) ++ [msg] ++ (inOrder rTree)
+
 build :: [LogMessage] -> MessageTree
 build logs = foldr insert Leaf (reverse logs)
 
