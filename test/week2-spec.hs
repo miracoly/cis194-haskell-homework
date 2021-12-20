@@ -22,3 +22,29 @@ main = hspec $ do
           LogMessage Info 4681 "ehci 0xf43d000:15: regista14: [0xbffff 0xfed nosabled 00-02] Zonseres: brips byted nored)",
           LogMessage Warning 3654 "e8] PGTT ASF! 00f00000003.2: 0x000 - 0000: 00009dbfffec00000: Pround/f1743colled"
         ]
+
+  describe "Test insert" $ do
+    let message1 = LogMessage Info 1000 "Message"
+    let message2 = LogMessage Info 2000 "Message"
+    let message3 = LogMessage Info 3000 "Message"
+    let message4 = LogMessage Info 1500 "Message"
+    let message5 = LogMessage Info 2500 "Message"
+    
+    let leafTree1 = Node Leaf message1 Leaf
+    let leafTree2 = Node Leaf message2 Leaf
+    let leafTree3 = Node Leaf message3 Leaf
+    let leafTree4 = Node Leaf message4 Leaf
+    let leafTree5 = Node Leaf message5 Leaf
+
+    let tree1 = Node leafTree1 message2 leafTree3
+    let tree2 = Node (Node Leaf message1 leafTree4) message2 leafTree3
+    let tree3 = Node leafTree1 message2 (Node leafTree5 message3 Leaf)
+
+    it "should return unchange input if LogMessage has no timestamp" $ do
+      insert (Unknown "Message without timestamp") leafTree1 `shouldBe` leafTree1
+    it "should return new Node if tree is Leaf" $ do
+      insert message1 Leaf `shouldBe` leafTree1
+    it "should return correct Tree if timestamp is less than first message" $ do
+      insert message4 tree1 `shouldBe` tree2
+    it "should return correct Tree if timestamp is greater than first message" $ do
+      insert message4 tree1 `shouldBe` tree2
