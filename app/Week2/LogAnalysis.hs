@@ -8,9 +8,11 @@ whatWentWrong = map extractMsg . inOrder . build . filter (isSevere 50) . filter
   where
     extractMsg :: LogMessage -> String
     extractMsg (LogMessage _ _ msg) = msg
+    extractMsg _ = error "expected LogMessage but was not"
 
     isSevere :: Int -> LogMessage -> Bool
     isSevere n1 (LogMessage (Error n2) _ _) = n2 >= n1
+    isSevere _ _ = False 
 
     isError :: LogMessage -> Bool
     isError (LogMessage (Error _) _ _) = True
@@ -18,7 +20,7 @@ whatWentWrong = map extractMsg . inOrder . build . filter (isSevere 50) . filter
 
 inOrder :: MessageTree -> [LogMessage]
 inOrder Leaf = []
-inOrder (Node lTree msg rTree) = (inOrder lTree) ++ [msg] ++ (inOrder rTree)
+inOrder (Node lTree msg rTree) = inOrder lTree ++ [msg] ++ inOrder rTree
 
 build :: [LogMessage] -> MessageTree
 build logs = foldr insert Leaf (reverse logs)
