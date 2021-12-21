@@ -65,5 +65,5 @@ test-suite week3
     other-modules:    Week3.Golf
     build-depends:    base ^>=4.14.3.0,
                       hspec,
-                      QuickCheck,
+                      QuickCheck
     default-language: Haskell2010
