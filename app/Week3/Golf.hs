@@ -2,6 +2,12 @@ module Week3.Golf where
 import Data.Maybe
 import Data.List (last)
 
+localMaxima :: [Integer] -> [Integer]
+localMaxima (x:y:z:xs)
+    | y > z && y > z = y : localMaxima (y:z:xs)
+    | otherwise = localMaxima (y:z:xs)
+localMaxima _ = []
+
 skips :: [a] -> [[a]]
 skips = skips' 1
     where
