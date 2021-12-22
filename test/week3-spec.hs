@@ -7,6 +7,29 @@ import Control.Exception (evaluate)
 import System.Exit (exitFailure)
 
 main = hspec $ do
+  describe "histogram" $ do
+    it "should return correct histogram string" $ do
+      histogram [1,1,1,5] `shouldBe`
+        " *        \n" ++
+        " *        \n" ++ 
+        " *   *    \n" ++
+        "==========\n" ++
+        "0123456789"
+      histogram [1,4,5,4,6,6,3,4,2,4,9] `shouldBe`
+        "    *     \n" ++
+        "    *     \n" ++
+        "    * *   \n" ++
+        " ******  *\n" ++
+        "==========\n" ++
+        "0123456789"
+      histogram [3,5] `shouldBe`
+        "   * *    \n" ++
+        "==========\n" ++
+        "0123456789\n"
+      histogram [] `shouldBe`
+        "==========\n" ++
+        "0123456789\n"
+
   describe "localMaxima" $ do
     it "should return [] if input is []" $ do
       localMaxima [] `shouldBe` []
