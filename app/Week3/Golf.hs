@@ -4,7 +4,7 @@ import Data.List (last)
 
 localMaxima :: [Integer] -> [Integer]
 localMaxima (x:y:z:xs)
-    | y > z && y > z = y : localMaxima (y:z:xs)
+    | y > x && y > z = y : localMaxima (y:z:xs)
     | otherwise = localMaxima (y:z:xs)
 localMaxima _ = []
 

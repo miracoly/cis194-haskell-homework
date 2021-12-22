@@ -15,6 +15,11 @@ main = hspec $ do
       localMaxima [2,9,5,6,1] `shouldBe` [9,6]
       localMaxima [2,3,4,1,5] `shouldBe` [4]
       localMaxima [1,2,3,4,5] `shouldBe` []
+      
+    it "should work for first and last elem of list as highest number" $ do
+      localMaxima [9,3,4,1,5] `shouldBe` [4]
+      localMaxima [9,3,4,7,5] `shouldBe` [7]
+      localMaxima [9,3,4,2,1] `shouldBe` [4]
 
   describe "Test skips" $ do
     it "should return correct list" $ do
