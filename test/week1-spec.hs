@@ -1,4 +1,4 @@
-import Week1
+import Week1.Week1
 
 import Test.Hspec
 import Test.QuickCheck

@@ -1,4 +1,4 @@
-module Week1 where
+module Week1.Week1 where
 
 import Data.Char
 
