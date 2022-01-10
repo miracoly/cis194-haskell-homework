@@ -37,9 +37,6 @@ xor = foldr (/=) False
 map' :: (a -> b) -> [a] -> [b]
 map' f = foldr ((:) . f) [] 
 
-cartProd :: [a] -> [b] -> [(a, b)]
-cartProd xs ys = [(x,y) | x <- xs, y <- ys]
-
 sieveSundaram :: Integer -> [Integer]
 sieveSundaram  = map (\x -> x * 2 + 1) . prePrime
     where prePrime n = takeWhile (\x -> x <= ((n - 1) `div` 2))

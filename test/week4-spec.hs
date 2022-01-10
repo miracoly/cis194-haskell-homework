@@ -41,7 +41,6 @@ main = hspec $ do
   
   describe "exercise 4" $ do
     it "should return correct result of sieveSundaram" $ do
-      cartProd [1,2] ['a','b'] `shouldBe` [(1,'a'),(1,'b'),(2,'a'),(2,'b')]
       sieveSundaram 7 `shouldBe` [3,5,7]
       sieveSundaram 12 `shouldBe` [3,5,7,11]
       sieveSundaram 24 `shouldBe` [3,5,7,11,13,17,19,23]
