@@ -52,7 +52,7 @@ main = hspec $ do
     it "should return correct Tree if timestamp is less than first message" $ do
       insert message4 tree1 `shouldBe` tree2
     it "should return correct Tree if timestamp is greater than first message" $ do
-      insert message4 tree1 `shouldBe` tree2
+      insert message5 tree1 `shouldBe` tree3
 
   describe "Test build" $ do
     it "should return Leaf is log list is empty" $ do
