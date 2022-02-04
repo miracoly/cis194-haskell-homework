@@ -32,3 +32,11 @@ main = hspec $ do
       boolify (add (lit (-3)) (lit 2)) `shouldBe` True
       boolify (add (lit 3) (lit 2)) `shouldBe` True
       boolify (add (lit (-3)) (lit (-2))) `shouldBe` False
+    it "lit, mul & add should work for instance MinMax" $ do
+      minMaxify (lit 2) `shouldBe` MinMax 2
+      minMaxify (lit (-3)) `shouldBe` MinMax (-3)
+      minMaxify (mul (lit (-3)) (lit 2)) `shouldBe` MinMax (-3)
+      minMaxify (mul (lit 3) (lit 2)) `shouldBe` MinMax 2
+      minMaxify (add (lit (-3)) (lit 2)) `shouldBe` MinMax 2
+      minMaxify (add (lit 3) (lit 2)) `shouldBe` MinMax 3
+      minMaxify (add (lit (-3)) (lit (-2))) `shouldBe` MinMax (-2)

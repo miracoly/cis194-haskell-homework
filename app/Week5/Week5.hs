@@ -23,24 +23,34 @@ class Expr a where
 
 instance Expr ExprT where
     lit = Lit 
-    mul = Mul
     add = Add 
+    mul = Mul
 
 reify :: ExprT -> ExprT
 reify = id
 
 instance Expr Integer where
     lit = id
-    mul = (*)
     add = (+)
+    mul = (*)
 
 integify :: Integer -> Integer
 integify = id
 
 instance Expr Bool where
     lit = (0<) 
-    mul = (&&)
     add = (||)
+    mul = (&&)
 
 boolify :: Bool -> Bool
 boolify = id
+
+newtype MinMax = MinMax Integer deriving (Eq, Show)
+
+instance Expr MinMax where
+  lit = MinMax
+  add (MinMax x) (MinMax y) = MinMax $ max x y
+  mul (MinMax x) (MinMax y) = MinMax $ min x y
+
+minMaxify :: MinMax -> MinMax
+minMaxify = id
