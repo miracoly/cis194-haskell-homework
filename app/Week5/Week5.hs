@@ -54,3 +54,14 @@ instance Expr MinMax where
 
 minMaxify :: MinMax -> MinMax
 minMaxify = id
+
+newtype Mod7 = Mod7 Integer deriving (Eq, Show)
+
+instance Expr Mod7 where
+  lit x = Mod7 (mod x 7)
+  add (Mod7 x) (Mod7 y) = lit $ x + y
+  mul (Mod7 x) (Mod7 y) = lit $ x * y
+
+mod7ify :: Mod7 -> Mod7
+mod7ify = id
+

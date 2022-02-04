@@ -40,3 +40,14 @@ main = hspec $ do
       minMaxify (add (lit (-3)) (lit 2)) `shouldBe` MinMax 2
       minMaxify (add (lit 3) (lit 2)) `shouldBe` MinMax 3
       minMaxify (add (lit (-3)) (lit (-2))) `shouldBe` MinMax (-2)
+    it "lit, mul & add should work for instance Mod7" $ do
+      mod7ify (lit 2) `shouldBe` Mod7 2
+      mod7ify (lit 7) `shouldBe` Mod7 0
+      mod7ify (lit 8) `shouldBe` Mod7 1
+      mod7ify (lit (-3)) `shouldBe` Mod7 4
+      mod7ify (lit (-7)) `shouldBe` Mod7 0
+      mod7ify (mul (lit (-3)) (lit 2)) `shouldBe` Mod7 1
+      mod7ify (mul (lit 3) (lit 2)) `shouldBe` Mod7 6
+      mod7ify (add (lit (-3)) (lit 2)) `shouldBe` Mod7 6
+      mod7ify (add (lit 3) (lit 2)) `shouldBe` Mod7 5
+      mod7ify (add (lit (-3)) (lit (-2))) `shouldBe` Mod7 2
