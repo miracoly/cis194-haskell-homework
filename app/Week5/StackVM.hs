@@ -1,4 +1,4 @@
-module StackVM (StackVal(..), StackExp(..), Stack, Program, stackVM) where
+module Week5.StackVM (StackVal(..), StackExp(..), Stack, Program, stackVM) where
 
 -- Values that may appear in the stack. Such a value will also be
 -- returned by the stackVM program execution function.
@@ -11,7 +11,7 @@ data StackExp = PushI Integer
               | Mul
               | And
               | Or
-                deriving Show
+                deriving (Show, Eq)
 
 type Stack   = [StackVal]
 type Program = [StackExp]

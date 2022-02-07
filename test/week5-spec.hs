@@ -6,6 +6,7 @@ import Test.QuickCheck
 import Control.Exception (evaluate)
 
 import System.Exit (exitFailure)
+import qualified Week5.StackVM as ST
 
 main = hspec $ do
   describe "exercise 1" $ do
@@ -51,3 +52,11 @@ main = hspec $ do
       mod7ify (add (lit (-3)) (lit 2)) `shouldBe` Mod7 6
       mod7ify (add (lit 3) (lit 2)) `shouldBe` Mod7 5
       mod7ify (add (lit (-3)) (lit (-2))) `shouldBe` Mod7 2
+
+  describe "exercise 5" $ do
+    it "returns correct Program" $ do
+      compile "1" `shouldBe` Just [ST.PushI 1]
+      compile "2+3" `shouldBe` Just [ST.PushI 2, ST.PushI 3, ST.Add]
+      compile "2*3" `shouldBe` Just [ST.PushI 2, ST.PushI 3, ST.Mul]
+      compile "2*3+4" `shouldBe` Just [ST.PushI 2,ST.PushI 3,ST.PushI 4,ST.Add,ST.Mul]
+      compile "abcde" `shouldBe` Nothing

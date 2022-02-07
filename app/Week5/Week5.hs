@@ -1,8 +1,10 @@
+{-# LANGUAGE FlexibleInstances #-}
+
 module Week5.Week5 where
 
 import Week5.ExprT
 import Week5.Parser (parseExp)
-import GHC.IO.Handle.Types (Handle__)
+import qualified Week5.StackVM as ST
 
 eval :: ExprT -> Integer
 eval (Lit x) = x
@@ -22,8 +24,8 @@ class Expr a where
     mul :: a -> a -> a
 
 instance Expr ExprT where
-    lit = Lit 
-    add = Add 
+    lit = Lit
+    add = Add
     mul = Mul
 
 reify :: ExprT -> ExprT
@@ -38,7 +40,7 @@ integify :: Integer -> Integer
 integify = id
 
 instance Expr Bool where
-    lit = (0<) 
+    lit = (0<)
     add = (||)
     mul = (&&)
 
@@ -65,3 +67,10 @@ instance Expr Mod7 where
 mod7ify :: Mod7 -> Mod7
 mod7ify = id
 
+instance Expr ST.Program where
+  lit num = [ST.PushI num]
+  add exp1 exp2  = exp1 ++ exp2 ++ [ST.Add]
+  mul exp1 exp2  = exp1 ++ exp2 ++ [ST.Mul]
+
+compile :: String -> Maybe ST.Program
+compile = parseExp lit add mul
