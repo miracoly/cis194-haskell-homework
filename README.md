@@ -19,7 +19,7 @@ and [QuickCheck](https://hackage.haskell.org/package/QuickCheck). Use
 -   [x] -   Week 2
 -   [x] -   Week 3
 -   [x] -   Week 4
--   [ ] -   Week 5
+-   [x] -   Week 5
 -   [ ] -   Week 6
 -   [ ] -   Week 7
 -   [ ] -   Week 8
