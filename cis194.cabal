@@ -94,7 +94,7 @@ test-suite week6
     type: exitcode-stdio-1.0
     hs-source-dirs:   test, app
     main-is:          week6-spec.hs
-    other-modules:    Week6.Week6,
+    other-modules:    Week6.Week6
     build-depends:    base ^>=4.14.3.0,
                       hspec,
                       QuickCheck
