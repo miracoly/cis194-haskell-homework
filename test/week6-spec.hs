@@ -21,3 +21,11 @@ main = hspec $ do
       fib 8 `shouldBe` 21
       fib 9 `shouldBe` 34
       fib 10 `shouldBe` 55
+
+  describe "exercise 4" $ do
+    it "should show correct output of Stream" $ do
+      show (streamRepeat 1) `shouldBe` (show $ take 20 $ repeat 1)
+
+  describe "exercise 4" $ do
+    it "should return correct result of streamToList" $ do
+      sum (take 20 (streamToList (streamRepeat 1))) `shouldBe` 20
