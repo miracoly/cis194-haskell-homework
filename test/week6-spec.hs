@@ -31,3 +31,5 @@ main = hspec $ do
       sum (take 20 (streamToList (streamRepeat 1))) `shouldBe` 20
     it "should return correct result of streamMap" $ do
       show (streamMap (+2) (streamRepeat 1)) `shouldBe` show (replicate 20 3)
+    it "should return correct result of streamFromSeed" $ do
+      show (streamFromSeed (+2) 1) `shouldBe` show [1,3..39]
