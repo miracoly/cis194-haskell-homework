@@ -1,5 +1,7 @@
 module Week6.Week6 where
 
+import Data.List
+
 -- Exercise 1
 fib :: Integer -> Integer
 fib n
@@ -33,3 +35,13 @@ streamMap f (Cons x xs) = Cons (f x) (streamMap f xs)
 
 streamFromSeed :: (a -> a) -> a -> Stream a
 streamFromSeed f x = Cons x $ streamFromSeed f (f x)
+
+-- Exercise 5
+nats :: Stream Integer
+nats = streamFromSeed (+1) 1
+
+interleave :: Stream a -> Stream a -> Stream a
+interleave (Cons x xs) (Cons y ys) = Cons x $ Cons y $ interleave xs ys
+
+ruler :: Stream Integer 
+ruler = interleave (streamRepeat 0) (interleave (streamRepeat 1) (streamFromSeed (+1) 2))

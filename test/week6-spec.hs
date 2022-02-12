@@ -33,3 +33,11 @@ main = hspec $ do
       show (streamMap (+2) (streamRepeat 1)) `shouldBe` show (replicate 20 3)
     it "should return correct result of streamFromSeed" $ do
       show (streamFromSeed (+2) 1) `shouldBe` show [1,3..39]
+
+  describe "exercise 5" $ do
+    it "should return correct result of nats" $ do
+      show nats `shouldBe` show [1..20]
+    it "should return correct result of interleave" $ do
+      show (interleave (streamRepeat 1) (streamRepeat 2)) `shouldBe` show (take 20 $ cycle [1,2])
+    it "should return correct result of ruler" $ do
+      show ruler `shouldBe` show [0,1,0,2,0,1,0,3,0,1,0,4,0,1,0,5,0,1,0,6]
