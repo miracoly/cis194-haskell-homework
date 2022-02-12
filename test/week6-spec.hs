@@ -24,8 +24,10 @@ main = hspec $ do
 
   describe "exercise 4" $ do
     it "should show correct output of Stream" $ do
-      show (streamRepeat 1) `shouldBe` (show $ take 20 $ repeat 1)
+      show (streamRepeat 1) `shouldBe` show (replicate 20 1)
 
   describe "exercise 4" $ do
     it "should return correct result of streamToList" $ do
       sum (take 20 (streamToList (streamRepeat 1))) `shouldBe` 20
+    it "should return correct result of streamMap" $ do
+      show (streamMap (+2) (streamRepeat 1)) `shouldBe` show (replicate 20 3)
