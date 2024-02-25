@@ -1,3 +1,5 @@
+module Week5.Week5Spec (spec) where
+
 import Week5.Week5
 import Week5.ExprT
 
@@ -8,7 +10,8 @@ import Control.Exception (evaluate)
 import System.Exit (exitFailure)
 import qualified Week5.StackVM as ST
 
-main = hspec $ do
+spec :: Spec
+spec = do
   describe "exercise 1" $ do
     it "should return correct result of eval" $ do
       eval (Mul (Add (Lit 2) (Lit 3)) (Lit 4)) `shouldBe` 20

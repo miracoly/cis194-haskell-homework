@@ -1,0 +1,69 @@
+cabal-version: 2.2
+
+-- This file has been generated from package.yaml by hpack version 0.36.0.
+--
+-- see: https://github.com/sol/hpack
+
+name:           cis-stack
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/cis-stack#readme>
+homepage:       https://github.com/githubuser/cis-stack#readme
+bug-reports:    https://github.com/githubuser/cis-stack/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2024 Author name here
+license:        BSD-3-Clause
+build-type:     Simple
+extra-source-files:
+    README.md
+    CHANGELOG.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/cis-stack
+
+library
+  exposed-modules:
+      Week1.Week1
+      Week2.Log
+      Week2.LogAnalysis
+      Week3.Golf
+      Week4.Week4
+      Week5.ExprT
+      Week5.Parser
+      Week5.StackVM
+      Week5.Week5
+      Week6.Week6
+  other-modules:
+      Paths_cis_stack
+  autogen-modules:
+      Paths_cis_stack
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  build-depends:
+      base >=4.7 && <5
+  default-language: Haskell2010
+
+test-suite cis-stack-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Week1.Week1Spec
+      Week2.Week2Spec
+      Week3.Week3Spec
+      Week4.Week4Spec
+      Week5.Week5Spec
+      Week6.Week6Spec
+      Paths_cis_stack
+  autogen-modules:
+      Paths_cis_stack
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      QuickCheck ==2.14.*
+    , base >=4.7 && <5
+    , cis-stack
+    , hspec ==2.11.*
+  default-language: Haskell2010

@@ -1,3 +1,5 @@
+module Week2.Week2Spec (spec) where
+
 import Week2.LogAnalysis
 import Week2.Log
 
@@ -7,7 +9,8 @@ import Control.Exception (evaluate)
 
 import System.Exit (exitFailure)
 
-main = hspec $ do
+spec :: Spec
+spec = do
   let message1 = LogMessage Info 1000 "Message"
   let message2 = LogMessage Info 2000 "Message"
   let message3 = LogMessage Info 3000 "Message"
@@ -37,7 +40,7 @@ main = hspec $ do
 
   describe "Test parse" $ do
     it "should return correct messages" $ do
-      testParse parse 3 "app/Week2/error.log" `shouldReturn`
+      testParse parse 3 "src/Week2/error.log" `shouldReturn`
         [
           LogMessage Info 5053 "pci_id: con ing!",
           LogMessage Info 4681 "ehci 0xf43d000:15: regista14: [0xbffff 0xfed nosabled 00-02] Zonseres: brips byted nored)",
@@ -69,7 +72,7 @@ main = hspec $ do
 
   describe "Test whatWentWrong" $ do
     it "should return sorted error messages" $ do
-      testWhatWentWrong parse whatWentWrong "app/Week2/sample.log" `shouldReturn`
+      testWhatWentWrong parse whatWentWrong "src/Week2/sample.log" `shouldReturn`
         [
           "Way too many pickles",
           "Bad pickle-flange interaction detected",

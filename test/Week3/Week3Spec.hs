@@ -1,3 +1,5 @@
+module Week3.Week3Spec (spec) where
+
 import Week3.Golf
 
 import Test.Hspec
@@ -6,7 +8,8 @@ import Control.Exception (evaluate)
 
 import System.Exit (exitFailure)
 
-main = hspec $ do
+spec :: Spec
+spec = do
   describe "extractLines" $ do
     it "should drop first elem of every list elemt in list1" $ do
       dropFirst [[1,5], [1], [1]] `shouldBe` [[5]]

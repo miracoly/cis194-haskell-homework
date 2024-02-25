@@ -1,3 +1,5 @@
+module Week1.Week1Spec (spec) where
+
 import Week1.Week1
 
 import Test.Hspec
@@ -6,7 +8,8 @@ import Control.Exception (evaluate)
 
 import System.Exit (exitFailure)
 
-main = hspec $ do
+spec :: Spec
+spec = do
   describe "Tests toDigits" $ do
     it "should return correct list" $ do
       toDigits 1234 `shouldBe` [1,2,3,4]

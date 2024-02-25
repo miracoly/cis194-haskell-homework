@@ -1,3 +1,5 @@
+module Week6.Week6Spec (spec) where
+
 import Week6.Week6
 
 import Test.Hspec
@@ -6,7 +8,8 @@ import Control.Exception (evaluate)
 
 import System.Exit (exitFailure)
 
-main = hspec $ do
+spec :: Spec
+spec = do
   describe "exercise 1" $ do
     it "should return correct result of fib" $ do
       fib (-1) `shouldBe` 0
