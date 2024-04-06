@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 {-# OPTIONS_GHC -fno-warn-warnings-deprecations -fno-warn-unused-binds #-}
 
 module Week2.Week2 (app) where
@@ -35,18 +36,29 @@ box =
   colLine = black
   colBox = HSL 0.6 0.60 0.40
 
-player :: Picture
-player =
-  colored black
-    $ transY 0.2
-    $ solidCircle 0.15
-    & colored black (polyline [(0, 0.15), (0, -0.4)])
-    & colored black (polyline [(0, -0.4), (-0.15, -0.6)])
-    & colored black (polyline [(0, -0.4), (0.15, -0.6)])
-    & colored black (polyline [(0, -0.2), (0.15, -0.35)])
-    & colored black (polyline [(0, -0.2), (-0.15, -0.35)])
+player :: Direction -> Picture
+player d =
+  case d of
+    R ->
+      playerBase
+        & colored black (translated 0.05 0.22 (circle 0.01))
+        & colored black (polyline [(0, 0.35), (-0.15, 0.2)])
+    _ ->
+      playerBase
+        & colored black (translated (-0.05) 0.22 (circle 0.01))
+        & colored black (polyline [(0, 0.35), (0.15, 0.2)])
  where
-  transY = translated 0
+  playerBase :: Picture
+  playerBase =
+    colored black
+      $ translated 0 0.2
+      $ circle 0.15
+      & colored black (polyline [(0, -0.15), (0, -0.4)])
+      & colored black (polyline [(0, -0.4), (-0.15, -0.6)])
+      & colored black (polyline [(0, -0.4), (0.15, -0.6)])
+      & colored black (polyline [(0, -0.2), (0.15, -0.35)])
+      & colored black (polyline [(0, -0.2), (-0.15, -0.35)])
+      & colored black (polyline [(0, -0.2), (-0.15, -0.35)])
 
 data Tile = Wall | Ground | Storage | Box | Blank
 
@@ -85,22 +97,22 @@ pictureOfMaze = foldr ((&) . f) blank coords
   coords :: [Coord]
   coords = [Coord x y | x <- [-10 .. 10], y <- [-10 .. 10]]
 
-handleEvent :: Event -> Coord -> Coord
-handleEvent (KeyPress k) c =
-  if isPlayerCoord newCoord
-    then newCoord
-    else c
+handleEvent :: Event -> State -> State
+handleEvent (KeyPress k) oldState@(State _ c) =
+  if isPlayerCoord (_stateCoord newState)
+    then newState
+    else oldState
  where
-  newCoord = handleKey k
-  handleKey :: Text -> Coord
+  newState = handleKey k
+  handleKey :: Text -> State
   handleKey key =
     case key of
-      "Right" -> adjacentCoord R c
-      "Up" -> adjacentCoord U c
-      "Left" -> adjacentCoord L c
-      "Down" -> adjacentCoord D c
-      _ -> c
-handleEvent _ c = c
+      "Right" -> State R $ adjacentCoord R c
+      "Up" -> State U $ adjacentCoord U c
+      "Left" -> State L $ adjacentCoord L c
+      "Down" -> State D $ adjacentCoord D c
+      _ -> oldState
+handleEvent _ s = s
 
 isPlayerCoord :: Coord -> Bool
 isPlayerCoord = isCorrectTile . maze
@@ -112,14 +124,33 @@ isPlayerCoord = isCorrectTile . maze
       Storage -> True
       _ -> False
 
-drawState :: Coord -> Picture
-drawState c = (atCoord c player) & pictureOfMaze
+drawState :: State -> Picture
+drawState (State d c) = (atCoord c (player d)) & pictureOfMaze
 
-initialState :: Coord
-initialState = Coord (-3) 3
+data State = State
+  { _stateDirection :: Direction
+  , _stateCoord :: Coord
+  }
+
+initialState :: State
+initialState = State R (Coord (-3) 3)
+
+resetableActivityOf ::
+  forall world.
+  world ->
+  (Event -> world -> world) ->
+  (world -> Picture) ->
+  IO ()
+resetableActivityOf w h draw = activityOf w eventHandler draw
+  where
+    eventHandler :: Event -> world -> world
+    eventHandler e s =
+      case e of
+        (KeyPress "Esc") -> w
+        _ -> h e s
 
 exercise3 :: IO ()
-exercise3 = activityOf initialState handleEvent drawState
+exercise3 = resetableActivityOf initialState handleEvent drawState
 
 maze :: Coord -> Tile
 maze (Coord x y)
