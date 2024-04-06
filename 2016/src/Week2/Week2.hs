@@ -4,6 +4,7 @@
 module Week2.Week2 (app) where
 
 import CodeWorld
+import Data.Text (Text)
 
 app :: IO ()
 app = exercise3
@@ -35,12 +36,15 @@ box =
   colBox = HSL 0.6 0.60 0.40
 
 player :: Picture
-player = colored black $ transY 0.2 $ solidCircle 0.15
-  & colored black (polyline [(0, 0.15), (0, -0.4)])
-  & colored black (polyline [(0, -0.4), (-0.15, -0.6)])
-  & colored black (polyline [(0, -0.4), (0.15, -0.6)])
-  & colored black (polyline [(0, -0.2), (0.15, -0.35)])
-  & colored black (polyline [(0, -0.2), (-0.15, -0.35)])
+player =
+  colored black
+    $ transY 0.2
+    $ solidCircle 0.15
+    & colored black (polyline [(0, 0.15), (0, -0.4)])
+    & colored black (polyline [(0, -0.4), (-0.15, -0.6)])
+    & colored black (polyline [(0, -0.4), (0.15, -0.6)])
+    & colored black (polyline [(0, -0.2), (0.15, -0.35)])
+    & colored black (polyline [(0, -0.2), (-0.15, -0.35)])
  where
   transY = translated 0
 
@@ -82,18 +86,40 @@ pictureOfMaze = foldr ((&) . f) blank coords
   coords = [Coord x y | x <- [-10 .. 10], y <- [-10 .. 10]]
 
 handleEvent :: Event -> Coord -> Coord
-handleEvent (KeyPress key) c
-  | key == "Right" = adjacentCoord R c
-  | key == "Up" = adjacentCoord U c
-  | key == "Left" = adjacentCoord L c
-  | key == "Down" = adjacentCoord D c
+handleEvent (KeyPress k) c =
+  if isPlayerCoord newCoord
+    then newCoord
+    else c
+ where
+  newCoord = handleKey k
+  handleKey :: Text -> Coord
+  handleKey key =
+    case key of
+      "Right" -> adjacentCoord R c
+      "Up" -> adjacentCoord U c
+      "Left" -> adjacentCoord L c
+      "Down" -> adjacentCoord D c
+      _ -> c
 handleEvent _ c = c
 
+isPlayerCoord :: Coord -> Bool
+isPlayerCoord = isCorrectTile . maze
+ where
+  isCorrectTile :: Tile -> Bool
+  isCorrectTile t =
+    case t of
+      Ground -> True
+      Storage -> True
+      _ -> False
+
 drawState :: Coord -> Picture
-drawState c = atCoord c (atCoord (Coord 3 2) player) & pictureOfMaze
+drawState c = (atCoord c player) & pictureOfMaze
+
+initialState :: Coord
+initialState = Coord (-3) 3
 
 exercise3 :: IO ()
-exercise3 = activityOf (Coord 0 0) handleEvent drawState
+exercise3 = activityOf initialState handleEvent drawState
 
 maze :: Coord -> Tile
 maze (Coord x y)

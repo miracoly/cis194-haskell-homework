@@ -72,6 +72,7 @@ library
     build-depends:
         base ^>=4.17.2.1,
         codeworld-api ^>= 0.8.1,
+        text == 1.2.5.0
 
     -- Directories containing source files.
     hs-source-dirs:   src
@@ -98,6 +99,7 @@ executable cis194
     build-depends:
         base ^>=4.17.2.1,
         codeworld-api ^>= 0.8.1,
+        text == 1.2.5.0,
         cis194
 
     -- Directories containing source files.
