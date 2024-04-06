@@ -1,5 +1,5 @@
-{-# OPTIONS_GHC -fno-warn-warnings-deprecations -fno-warn-unused-binds #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -fno-warn-warnings-deprecations -fno-warn-unused-binds #-}
 
 module Week2.Week2 (app) where
 
@@ -33,6 +33,16 @@ box =
  where
   colLine = black
   colBox = HSL 0.6 0.60 0.40
+
+player :: Picture
+player = colored black $ transY 0.2 $ solidCircle 0.15
+  & colored black (polyline [(0, 0.15), (0, -0.4)])
+  & colored black (polyline [(0, -0.4), (-0.15, -0.6)])
+  & colored black (polyline [(0, -0.4), (0.15, -0.6)])
+  & colored black (polyline [(0, -0.2), (0.15, -0.35)])
+  & colored black (polyline [(0, -0.2), (-0.15, -0.35)])
+ where
+  transY = translated 0
 
 data Tile = Wall | Ground | Storage | Box | Blank
 
@@ -80,7 +90,7 @@ handleEvent (KeyPress key) c
 handleEvent _ c = c
 
 drawState :: Coord -> Picture
-drawState c = atCoord c pictureOfMaze
+drawState c = atCoord c (atCoord (Coord 3 2) player) & pictureOfMaze
 
 exercise3 :: IO ()
 exercise3 = activityOf (Coord 0 0) handleEvent drawState

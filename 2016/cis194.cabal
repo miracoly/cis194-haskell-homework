@@ -58,7 +58,9 @@ library
     import:           warnings
 
     -- Modules exported by the library.
-    exposed-modules:  Week1.Week1
+    exposed-modules:
+        Week1.Week1,
+        Week2.Week2
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -85,7 +87,9 @@ executable cis194
     main-is:          Main.hs
 
     -- Modules included in this executable, other than Main.
---    other-modules:   Week1.Week1
+    other-modules:
+        Week1.Week1,
+        Week2.Week2
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
